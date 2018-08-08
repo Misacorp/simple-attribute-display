@@ -1,2 +1,3 @@
 <?php
-$settings = new Simple_Attribute_Display_Settings( __FILE__ );
+
+// Silence is golden

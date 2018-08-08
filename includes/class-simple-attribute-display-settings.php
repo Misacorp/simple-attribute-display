@@ -108,110 +108,48 @@ class Simple_Attribute_Display_Settings {
 	private function settings_fields () {
 
 		$settings['standard'] = array(
-			'title'					=> __( 'Standard', 'simple-attribute-display' ),
-			'description'			=> __( 'These are fairly standard form input fields.', 'simple-attribute-display' ),
+			'title'					=> __( 'Simple Attribute Display Settings', 'simple-attribute-display' ),
+			'description'			=> __( 'Configure which attributes to display in product titles and how to display them.', 'simple-attribute-display' ),
 			'fields'				=> array(
 				array(
-					'id' 			=> 'text_field',
-					'label'			=> __( 'Some Text' , 'simple-attribute-display' ),
-					'description'	=> __( 'This is a standard text field.', 'simple-attribute-display' ),
+					'id' 			=> 'data_source',
+					'label'			=> __( 'Data source', 'simple-attribute-display' ),
+					'description'	=> __( 'Text source to prefix product titles with.', 'simple-attribute-display' ),
+					'type'			=> 'radio',
+					'options'		=> array( 'top_category' => 'Top category name', 'attribute' => 'Attribute name' ),
+					'default'		=> 'top_category'
+        ),
+				array(
+					'id' 			=> 'attribute_name',
+					'label'			=> __( 'Attribute Name' , 'simple-attribute-display' ),
+					'description'	=> __( 'Which attribute to display if \'attribute\' is selected above.', 'simple-attribute-display' ),
 					'type'			=> 'text',
 					'default'		=> '',
-					'placeholder'	=> __( 'Placeholder text', 'simple-attribute-display' )
-				),
+					'placeholder'	=> __( 'Color, brand, power, ...', 'simple-attribute-display' )
+        ),
 				array(
-					'id' 			=> 'password_field',
-					'label'			=> __( 'A Password' , 'simple-attribute-display' ),
-					'description'	=> __( 'This is a standard password field.', 'simple-attribute-display' ),
-					'type'			=> 'password',
-					'default'		=> '',
-					'placeholder'	=> __( 'Placeholder text', 'simple-attribute-display' )
-				),
-				array(
-					'id' 			=> 'secret_text_field',
-					'label'			=> __( 'Some Secret Text' , 'simple-attribute-display' ),
-					'description'	=> __( 'This is a secret text field - any data saved here will not be displayed after the page has reloaded, but it will be saved.', 'simple-attribute-display' ),
-					'type'			=> 'text_secret',
-					'default'		=> '',
-					'placeholder'	=> __( 'Placeholder text', 'simple-attribute-display' )
-				),
-				array(
-					'id' 			=> 'text_block',
-					'label'			=> __( 'A Text Block' , 'simple-attribute-display' ),
-					'description'	=> __( 'This is a standard text area.', 'simple-attribute-display' ),
-					'type'			=> 'textarea',
-					'default'		=> '',
-					'placeholder'	=> __( 'Placeholder text for this textarea', 'simple-attribute-display' )
-				),
-				array(
-					'id' 			=> 'single_checkbox',
-					'label'			=> __( 'An Option', 'simple-attribute-display' ),
-					'description'	=> __( 'A standard checkbox - if you save this option as checked then it will store the option as \'on\', otherwise it will be an empty string.', 'simple-attribute-display' ),
-					'type'			=> 'checkbox',
-					'default'		=> ''
-				),
-				array(
-					'id' 			=> 'select_box',
-					'label'			=> __( 'A Select Box', 'simple-attribute-display' ),
-					'description'	=> __( 'A standard select box.', 'simple-attribute-display' ),
-					'type'			=> 'select',
-					'options'		=> array( 'drupal' => 'Drupal', 'joomla' => 'Joomla', 'wordpress' => 'WordPress' ),
-					'default'		=> 'wordpress'
-				),
-				array(
-					'id' 			=> 'radio_buttons',
-					'label'			=> __( 'Some Options', 'simple-attribute-display' ),
-					'description'	=> __( 'A standard set of radio buttons.', 'simple-attribute-display' ),
+					'id' 			=> 'separator_type',
+					'label'			=> __( 'Separator type', 'simple-attribute-display' ),
+					'description'	=> __( 'How to separate the prefix and product title.', 'simple-attribute-display' ),
 					'type'			=> 'radio',
-					'options'		=> array( 'superman' => 'Superman', 'batman' => 'Batman', 'ironman' => 'Iron Man' ),
-					'default'		=> 'batman'
+					'options'		=> array( 'line_break' => 'Line break', 'custom' => 'Custom string' ),
+					'default'		=> 'line_break'
+        ),
+				array(
+					'id' 			=> 'separator',
+					'label'			=> __( 'Separator', 'simple-attribute-display' ),
+					'description'	=> __( 'The character(s) between a product\'s prefix and name.', 'simple-attribute-display' ),
+          'type'			=> 'text',
+          'placeholder' => __( 'Any set of characters', 'simple-attribute-display'),
+					'default'		=> ''
+        ),
+				array(
+					'id' 			=> 'uppercase',
+					'label'			=> __( 'Uppercase prefix', 'simple-attribute-display' ),
+					'description'	=> __( 'Transform prefix to uppercase', 'simple-attribute-display' ),
+					'type'			=> 'checkbox',
+					'default'		=> 'false'
 				),
-				array(
-					'id' 			=> 'multiple_checkboxes',
-					'label'			=> __( 'Some Items', 'simple-attribute-display' ),
-					'description'	=> __( 'You can select multiple items and they will be stored as an array.', 'simple-attribute-display' ),
-					'type'			=> 'checkbox_multi',
-					'options'		=> array( 'square' => 'Square', 'circle' => 'Circle', 'rectangle' => 'Rectangle', 'triangle' => 'Triangle' ),
-					'default'		=> array( 'circle', 'triangle' )
-				)
-			)
-		);
-
-		$settings['extra'] = array(
-			'title'					=> __( 'Extra', 'simple-attribute-display' ),
-			'description'			=> __( 'These are some extra input fields that maybe aren\'t as common as the others.', 'simple-attribute-display' ),
-			'fields'				=> array(
-				array(
-					'id' 			=> 'number_field',
-					'label'			=> __( 'A Number' , 'simple-attribute-display' ),
-					'description'	=> __( 'This is a standard number field - if this field contains anything other than numbers then the form will not be submitted.', 'simple-attribute-display' ),
-					'type'			=> 'number',
-					'default'		=> '',
-					'placeholder'	=> __( '42', 'simple-attribute-display' )
-				),
-				array(
-					'id' 			=> 'colour_picker',
-					'label'			=> __( 'Pick a colour', 'simple-attribute-display' ),
-					'description'	=> __( 'This uses WordPress\' built-in colour picker - the option is stored as the colour\'s hex code.', 'simple-attribute-display' ),
-					'type'			=> 'color',
-					'default'		=> '#21759B'
-				),
-				array(
-					'id' 			=> 'an_image',
-					'label'			=> __( 'An Image' , 'simple-attribute-display' ),
-					'description'	=> __( 'This will upload an image to your media library and store the attachment ID in the option field. Once you have uploaded an imge the thumbnail will display above these buttons.', 'simple-attribute-display' ),
-					'type'			=> 'image',
-					'default'		=> '',
-					'placeholder'	=> ''
-				),
-				array(
-					'id' 			=> 'multi_select_box',
-					'label'			=> __( 'A Multi-Select Box', 'simple-attribute-display' ),
-					'description'	=> __( 'A standard multi-select box - the saved data is stored as an array.', 'simple-attribute-display' ),
-					'type'			=> 'select_multi',
-					'options'		=> array( 'linux' => 'Linux', 'mac' => 'Mac', 'windows' => 'Windows' ),
-					'default'		=> array( 'linux' )
-				)
 			)
 		);
 
