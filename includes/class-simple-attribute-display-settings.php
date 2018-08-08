@@ -106,6 +106,11 @@ class Simple_Attribute_Display_Settings {
 	 * @return array Fields to be displayed on settings page
 	 */
 	private function settings_fields () {
+    $top_level_categories = get_terms( 'product_cat', array('parent' => 0));
+    $topcats = [];
+    foreach ($top_level_categories as $item) {
+      $topcats[$item->term_id] = $item->name;
+    }
 
 		$settings['standard'] = array(
 			'title'					=> __( 'Simple Attribute Display Settings', 'simple-attribute-display' ),
@@ -138,7 +143,7 @@ class Simple_Attribute_Display_Settings {
 				array(
 					'id' 			=> 'separator',
 					'label'			=> __( 'Separator', 'simple-attribute-display' ),
-					'description'	=> __( 'The character(s) between a product\'s prefix and name.', 'simple-attribute-display' ),
+					'description'	=> __( 'The character(s) between a product\'s prefix and name. Use underscores (_) for spaces.', 'simple-attribute-display' ),
           'type'			=> 'text',
           'placeholder' => __( 'Any set of characters', 'simple-attribute-display'),
 					'default'		=> ''
@@ -150,6 +155,14 @@ class Simple_Attribute_Display_Settings {
 					'type'			=> 'checkbox',
 					'default'		=> 'false'
 				),
+				array(
+					'id' 			=> 'excluded_categories',
+					'label'			=> __( 'Excluded categories', 'simple-attribute-display' ),
+					'description'	=> __( 'Which top level categories to exclude from prefixes.', 'simple-attribute-display' ),
+					'type'			=> 'select_multi',
+					'options'		=> $topcats,
+					'default'		=> []
+				)
 			)
 		);
 

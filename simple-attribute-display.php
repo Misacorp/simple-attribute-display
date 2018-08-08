@@ -3,8 +3,8 @@
  * Plugin Name: Simple Attribute Display
  * Version: 1.0
  * Plugin URI: http://toriverkosto.fi
- * Description: This is your starter template for your next WordPress plugin.
- * Author: Misa Jokisalo
+ * Description: Prefix product names with their attributes or category names.
+ * Author: Misacorp
  * Author URI: http://toriverkosto.fi
  * Requires at least: 4.0
  * Tested up to: 4.0
@@ -13,7 +13,7 @@
  * Domain Path: /lang/
  *
  * @package WordPress
- * @author Misa Jokisalo
+ * @author Misacorp
  * @since 1.0.0
  */
 
@@ -52,11 +52,22 @@ function Simple_Attribute_Display () {
  */
 function get_product_top_level_category( $product_id ) {
   try {
-    $product_top_category='';
+    $product_top_category = '';
     $prod_terms = get_the_terms( $product_id, 'product_cat' );
+    $excludes = get_option('sad_excluded_categories');
     foreach ($prod_terms as $prod_term) {
       $product_cat_id = $prod_term->term_id;
-      $product_parent_categories_all_hierachy = get_ancestors( $product_cat_id, 'product_cat' );  
+      $product_parent_categories_all_hierachy = get_ancestors( $product_cat_id, 'product_cat' );
+
+      // If no ancestor categories were returned, break the loop and return this category
+      if (count($product_parent_categories_all_hierachy === 0)) {
+        // Some top level categories like "front page" can be excluded. Only stop going through category hierarchies if a non-excluded one is found.
+        if (!in_array($product_cat_id, $excludes)) {
+          $product_top_category = $product_cat_id;
+          break;
+        }
+      }
+        
       $last_parent_cat = array_slice($product_parent_categories_all_hierachy, -1, 1, true);
       foreach($last_parent_cat as $last_parent_cat_value){
         $product_top_category =  $last_parent_cat_value;
@@ -64,7 +75,7 @@ function get_product_top_level_category( $product_id ) {
     }
 
     // Translate ID to category name
-    if( $term = get_term_by( 'id', $product_top_category, 'product_cat' ) ){
+    if( $term = get_term_by( 'id', $product_top_category, 'product_cat' )) {
       return $term->name;
     }
     return "";
@@ -100,6 +111,9 @@ function add_brand_to_product_title($data) {
     // Use custom string as separator
     $custom_string = get_option('sad_separator');
     $separator = htmlspecialchars($custom_string);
+    // Replace underscores with spaces
+    $separator = str_replace('_', ' ', $separator);
+
   }
 
   if ($data_source === 'attribute') {
@@ -152,7 +166,7 @@ function run_plugin() {
   Simple_Attribute_Display();
 
   // Hook into shop loop and add brands
-  add_filter('woocommerce_shop_loop_item_title', 'add_brand_names', 10);
+  add_filter('woocommerce_before_shop_loop_item_title', 'add_brand_names', 10);
 
   // Hook into single product page and add brands
   add_filter('woocommerce_before_single_product_summary', 'add_brand_names');
