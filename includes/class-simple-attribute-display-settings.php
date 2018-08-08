@@ -126,7 +126,7 @@ class Simple_Attribute_Display_Settings {
         ),
 				array(
 					'id' 			=> 'attribute_name',
-					'label'			=> __( 'Attribute Name' , 'simple-attribute-display' ),
+					'label'			=> __( 'Attribute name' , 'simple-attribute-display' ),
 					'description'	=> __( 'Which attribute to display if \'attribute\' is selected above.', 'simple-attribute-display' ),
 					'type'			=> 'text',
 					'default'		=> '',
