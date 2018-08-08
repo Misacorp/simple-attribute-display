@@ -14,17 +14,19 @@ Add your product brands, colors or other attributes to their titles. Alternative
 Includes the option to filter out unwanted categories and define a custom separator between the prefix and product name.
 
 ### Example:
-Product name: Three Wolves T-Shirt  
-Attributes:  
-  Color: Black  
-  Size: L  
+**Product name**: Three Wolves T-Shirt  
+**Attributes**:  
+**Color**: Black  
+**Size**: L  
 
-Plugin configuration:  
-  Data source: Attribute  
-  Attribute name: Color  
-  Separator type: Line break  
+**Plugin configuration**:
 
-Final product name: Black Three Wolves T-Shirt
+**Data source**: Attribute  
+**Attribute name**: Color  
+**Separator type**: Custom string
+**Separator**: _ (underscores are converted into spaces)
+
+**Final product name**: Black Three Wolves T-Shirt
 
 ## Installation
 
